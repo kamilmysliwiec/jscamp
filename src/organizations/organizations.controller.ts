@@ -1,43 +1,35 @@
-import { organizations } from '@app/fixtures';
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put } from '@nestjs/common';
 import { Organization } from './interfaces/organization.interface';
+import { OrganizationsService } from './organizations.service';
 
 @Controller('organizations')
 export class OrganizationsController {
-  private readonly organizations: Organization[] = organizations;
+  constructor(private readonly organizationsService: OrganizationsService) {}
 
   @Get()
   findAll(): Organization[] {
-    return this.organizations;
+    return this.organizationsService.findAll();
   }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
   create(@Body() createOrganizationDto) {
-    this.organizations.push(createOrganizationDto);
-    return this.organizations[this.organizations.length - 1];
+    return this.organizationsService.create(createOrganizationDto);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string): Organization | undefined {
-    return this.organizations.find(organization => organization.id === +id);
+    return this.organizationsService.findOne(id);
   }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() updateOrganizationDto) {
-    const organizationId = this.organizations.findIndex(
-      organization => organization.id === +id,
-    );
-    this.organizations[organizationId] = updateOrganizationDto;
-    return this.organizations[organizationId];
+    return this.organizationsService.update(id, updateOrganizationDto);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   delete(@Param('id') id: string) {
-    const organizationId = this.organizations.findIndex(
-      organization => organization.id === +id,
-    );
-    this.organizations.splice(organizationId, 1);
+    return this.organizationsService.delete(id);
   }
 }

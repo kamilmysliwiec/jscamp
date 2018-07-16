@@ -13,7 +13,7 @@ export class UsersController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() createUserDto) {
+  create(@Body() createUserDto): User {
     this.users.push(createUserDto);
     return this.users[this.users.length - 1];
   }
@@ -24,7 +24,7 @@ export class UsersController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateUserDto) {
+  update(@Param('id') id: string, @Body() updateUserDto): User {
     const userId = this.users.findIndex(user => user.id === +id);
     this.users[userId] = updateUserDto;
     return this.users[userId];

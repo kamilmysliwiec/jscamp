@@ -13,7 +13,7 @@ export class OrganizationsController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() createOrganizationDto) {
+  create(@Body() createOrganizationDto): Organization {
     this.organizations.push(createOrganizationDto);
     return this.organizations[this.organizations.length - 1];
   }
@@ -24,9 +24,9 @@ export class OrganizationsController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateOrganizationDto) {
+  update(@Param('id') id: string, @Body() updateOrganizationDto): Organization {
     const organizationId = this.organizations.findIndex(
-      organization => organization.id === +id,
+      item => item.id === +id,
     );
     this.organizations[organizationId] = updateOrganizationDto;
     return this.organizations[organizationId];
@@ -36,7 +36,7 @@ export class OrganizationsController {
   @HttpCode(HttpStatus.NO_CONTENT)
   delete(@Param('id') id: string) {
     const organizationId = this.organizations.findIndex(
-      organization => organization.id === +id,
+      item => item.id === +id,
     );
     this.organizations.splice(organizationId, 1);
   }

@@ -6,7 +6,6 @@ import { User } from './interfaces/user.interface';
 export class UsersService {
   private readonly users: User[] = users;
 
-  @Get()
   findAll(): User[] {
     return this.users;
   }

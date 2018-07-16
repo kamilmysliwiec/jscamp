@@ -1,39 +1,35 @@
-import { users } from '@app/fixtures';
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put } from '@nestjs/common';
 import { User } from './interfaces/user.interface';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-  private readonly users: User[] = users;
+  constructor(private readonly usersService: UsersService) {}
 
   @Get()
   findAll(): User[] {
-    return this.users;
+    return this.usersService.findAll();
   }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
   create(@Body() createUserDto): User {
-    this.users.push(createUserDto);
-    return this.users[this.users.length - 1];
+    return this.usersService.create(createUserDto);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string): User | undefined {
-    return this.users.find(user => user.id === +id);
+    return this.usersService.findOne(id);
   }
 
   @Put(':id')
   update(@Param('id') id: string, @Body() updateUserDto): User {
-    const userId = this.users.findIndex(user => user.id === +id);
-    this.users[userId] = updateUserDto;
-    return this.users[userId];
+    return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   delete(@Param('id') id: string) {
-    const userId = this.users.findIndex(user => user.id === +id);
-    this.users.splice(userId, 1);
+    return this.usersService.delete(id);
   }
 }

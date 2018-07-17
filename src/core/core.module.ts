@@ -1,6 +1,6 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { APP_FILTER } from '@nestjs/core';
-import { HttpExceptionFilter } from 'common/http-exception.filter';
+import { HttpExceptionFilter } from 'common/filters/http-exception.filter';
 import { ConfigModule } from './config/config.module';
 import { LoggerModule } from './logger/logger.module';
 

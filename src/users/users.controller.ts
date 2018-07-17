@@ -1,4 +1,7 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import { ParseIntPipe } from 'common/pipes/parse-int.pipe';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './interfaces/user.interface';
 import { UsersService } from './users.service';
 
@@ -13,17 +16,20 @@ export class UsersController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() createUserDto): User {
+  create(@Body() createUserDto: CreateUserDto): User {
     return this.usersService.create(createUserDto);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): User | undefined {
+  findOne(
+    @Param('id', new ParseIntPipe())
+    id: number,
+  ): User {
     return this.usersService.findOne(id);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateUserDto): User {
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto): User {
     return this.usersService.update(id, updateUserDto);
   }
 

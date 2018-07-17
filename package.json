@@ -8,6 +8,7 @@
     "format": "prettier --write \"**/*.ts\"",
     "start": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/main.ts",
     "start:dev": "cross-env NODE_ENV=development nodemon",
+    "start:debug": "cross-env NODE_ENV=development node --inspect-brk -r ts-node/register -r tsconfig-paths/register src/main.ts",
     "prestart:prod": "rm -rf dist && tsc",
     "start:prod": "node dist/main.js",
     "start:hmr": "node dist/server",

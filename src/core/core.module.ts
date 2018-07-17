@@ -1,8 +1,19 @@
-import { Module } from '@nestjs/common';
+import { DynamicModule, Module } from '@nestjs/common';
 import { ConfigModule } from './config/config.module';
+import { LoggerModule } from './logger/logger.module';
 
-@Module({
-  imports: [ConfigModule],
-  exports: [ConfigModule],
-})
-export class CoreModule {}
+export interface CoreModuleOptions {
+  enableLogging: boolean;
+}
+
+@Module({})
+export class CoreModule {
+  static register(options: CoreModuleOptions): DynamicModule {
+    const { enableLogging } = options;
+    return {
+      module: CoreModule,
+      imports: [ConfigModule, LoggerModule.register({ enableLogging })],
+      exports: [ConfigModule, LoggerModule],
+    };
+  }
+}

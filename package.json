@@ -6,8 +6,8 @@
   "license": "MIT",
   "scripts": {
     "format": "prettier --write \"**/*.ts\"",
-    "start": "ts-node -r tsconfig-paths/register src/main.ts",
-    "start:dev": "nodemon",
+    "start": "cross-env NODE_ENV=development ts-node -r tsconfig-paths/register src/main.ts",
+    "start:dev": "cross-env NODE_ENV=development nodemon",
     "prestart:prod": "rm -rf dist && tsc",
     "start:prod": "node dist/main.js",
     "start:hmr": "node dist/server",
@@ -19,6 +19,8 @@
   "dependencies": {
     "@nestjs/common": "^5.0.0",
     "@nestjs/core": "^5.0.0",
+    "cross-env": "^5.2.0",
+    "dotenv": "^6.0.0",
     "fastify-formbody": "^2.0.0",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.0.0",
@@ -54,6 +56,10 @@
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "coverageDirectory": "../coverage"
+    "coverageDirectory": "../coverage",
+    "moduleNameMapper": {
+      "@app/fixtures": "<rootDir>/../fixtures",
+      "@app/(.*)": "<rootDir>/$1"
+    }
   }
 }

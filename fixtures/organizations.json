@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "Nest",
+    "tags": ["node", "framework", "typescript", "javascript"]
+  },
+  {
+    "id": 2,
+    "name": "JsCamp",
+    "tags": ["conference", "javascript", "barcelona"]
+  },
+  {
+    "id": 3,
+    "name": "Node.js",
+    "tags": ["platform", "tool", "v8"]
+  }
+]
